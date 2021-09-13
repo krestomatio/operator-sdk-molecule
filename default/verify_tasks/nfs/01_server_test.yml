@@ -1,0 +1,14 @@
+---
+- name: base test resource
+  vars:
+    crd_key: server
+    crd_api: nfs.krestomat.io/v1alpha1.Server
+  block:
+    - include_tasks: ../base_create_cr.yml
+
+    - include_tasks: ../base_delete_cr.yml
+
+  # - name: Add assertions here
+  #   assert:
+  #     that: false
+  #     fail_msg: FIXME Add real assertions for your operator

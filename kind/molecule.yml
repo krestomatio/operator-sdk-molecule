@@ -1,0 +1,28 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: delegated
+lint: |
+  set -e
+  yamllint -d "{extends: relaxed, rules: {line-length: {max: 120}}}" .
+  if [ -d roles ]; then
+    yamllint roles/*
+    ansible-lint roles/*
+    flake8 roles/*
+  fi
+platforms:
+  - name: cluster
+    groups:
+      - k8s
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: ../default/prepare.yml
+    verify: ../default/verify.yml
+  inventory:
+    links:
+      group_vars: ../default/group_vars/
+  env:
+    K8S_AUTH_KUBECONFIG: ${HOME:-~}/.kube/kind_${TEST_OPERATOR_SHORTNAME:-osdk}_kubeconfig
+    KUBECONFIG: ${HOME:-~}/.kube/kind_${TEST_OPERATOR_SHORTNAME:-osdk}_kubeconfig

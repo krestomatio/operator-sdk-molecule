@@ -1,0 +1,14 @@
+---
+- name: base test resource
+  vars:
+    crd_key: m4e
+    crd_api: m4e.krestomat.io/v1alpha1.M4e
+  block:
+    - include_tasks: ../base_create_cr.yml
+
+    - include_tasks: ../base_delete_cr.yml
+
+  # - name: Add assertions here
+  #   assert:
+  #     that: false
+  #     fail_msg: FIXME Add real assertions for your operator

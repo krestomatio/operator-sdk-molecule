@@ -1,0 +1,11 @@
+- name: "Create the {{ crd_api }}"
+  k8s:
+    state: present
+    namespace: '{{ namespace }}'
+    definition: "{{ lookup('template', '/'.join([samples_dir, crds[crd_key].sample_file])) | from_yaml }}"
+    wait: yes
+    wait_timeout: "{{ verify_create_cr_wait_timeout | default(verify_wait_timeout) | default(300) }}"
+    wait_condition:
+      type: Running
+      reason: Successful
+      status: "True"

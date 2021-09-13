@@ -1,0 +1,38 @@
+---
+- name: Ensure operator image is set
+  fail:
+    msg: |
+      You must specify the OPERATOR_IMAGE environment variable in order to run the
+      'default' scenario
+  when: not operator_image
+
+- name: "{{ kustomize_edit_set }} testing image"
+  loop: "{{ kustomize_config_dirs_edit_image | default(kustomize_config_dirs) }}"
+  command: '{{ kustomize }} edit set image testing={{ operator_image if kustomize_edit_set == "set" else "testing-operator" }}'
+  args:
+    chdir: '{{ item }}'
+
+- name: "{{ kustomize_edit_add }} pull policy"
+  loop: "{{ kustomize_config_dirs_edit_pull_policy | default(kustomize_config_dirs) }}"
+  command: '{{ kustomize }} edit {{ kustomize_edit_add }} patch --path pull_policy/{{ operator_pull_policy }}.yaml'
+  args:
+    chdir: '{{ item }}'
+
+- name: "{{ kustomize_edit_set }} testing namespace"
+  loop: "{{ kustomize_config_dirs_edit_namespace | default(kustomize_config_dirs) }}"
+  command: '{{ kustomize }} edit set namespace {{ namespace if kustomize_edit_set == "set" else operator_shortname + "-test" }}'
+  args:
+    chdir: '{{ item }}'
+
+- name: "{{ kustomize_edit_set }} testing nameprefix"
+  loop: "{{ kustomize_config_dirs_edit_nameprefix | default(kustomize_config_dirs) }}"
+  command: '{{ kustomize }} edit set nameprefix {{ nameprefix if kustomize_edit_set == "set" else operator_shortname + "-" }}'
+  args:
+    chdir: '{{ item }}'
+
+- name: "{{ kustomize_edit_add }} extra patches"
+  when: kustomize_extra_patches is defined and kustomize_extra_patches
+  loop: "{{ kustomize_extra_patches }}"
+  command: '{{ kustomize }} edit {{ kustomize_edit_add }} patch --path {{ kustomize_extra_patches.relative_path }}'
+  args:
+    chdir: '{{ kustomize_extra_patches.config_dir }}'

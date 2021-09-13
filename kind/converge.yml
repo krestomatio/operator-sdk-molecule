@@ -1,0 +1,26 @@
+---
+- name: Converge
+  hosts: localhost
+  gather_facts: no
+  vars_files:
+    - "../default/vars/{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') }}.yml"
+
+  tasks:
+    - name: Build operator image
+      docker_image:
+        build:
+          path: '{{ project_dir }}'
+          pull: no
+          args: '{{ operator_image_args | default(omit) }}'
+        name: '{{ operator_image }}'
+        tag: latest
+        push: no
+        source: build
+        force_source: yes
+
+    - name: Load image into kind cluster
+      command: kind load docker-image --name {{ operator_shortname }}-test '{{ operator_image }}'
+      register: result
+      changed_when: '"not yet present" in result.stdout'
+
+- import_playbook: ../default/converge.yml

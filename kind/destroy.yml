@@ -1,0 +1,16 @@
+---
+- name: Destroy
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - "../default/vars/{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') }}.yml"
+  collections:
+    - community.kubernetes
+
+  tasks:
+    - name: Destroy test kind cluster
+      command: kind delete cluster --name {{ operator_shortname }}-test --kubeconfig {{ kubeconfig }}
+
+    - import_tasks: ../default/kustomize-prepare.yml
+      vars:
+        kustomize_prepate_set: false

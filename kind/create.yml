@@ -1,0 +1,9 @@
+---
+- name: Create
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - "../default/vars/{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') }}.yml"
+  tasks:
+    - name: Create test kind cluster
+      command: kind create cluster --name {{ operator_shortname }}-test --kubeconfig {{ kubeconfig }}{{ ' --image ' + kind_image if kind_image is defined else '' }}

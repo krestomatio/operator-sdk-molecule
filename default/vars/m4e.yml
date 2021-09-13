@@ -1,0 +1,19 @@
+operator_shortname: "{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') |
+  default('m4e',true) }}"
+crds:
+  m4e:
+    name: m4es.m4e.krestomat.io
+    sample_file: "{{ lookup('env', 'CR_FILE_M4E') |
+      default('m4e_v1alpha1_m4e.yaml',true) }}"
+verify_wait_timeout: 600
+verify_debug_resources:
+  - api_version: v1
+    kind: Pod
+  - api_version: apps/v1
+    kind: Deployment
+  - api_version: v1
+    kind: Secret
+  - api_version: v1
+    kind: ConfigMap
+  - api_version: v1
+    kind: Job

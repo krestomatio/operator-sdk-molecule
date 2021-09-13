@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: localhost
+  gather_facts: no
+  vars_files:
+    - "vars/{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') }}.yml"
+  collections:
+    - community.kubernetes
+
+  tasks:
+    - import_tasks: kustomize.yml
+      vars:
+        state: present

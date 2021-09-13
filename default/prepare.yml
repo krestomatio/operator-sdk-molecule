@@ -1,0 +1,9 @@
+---
+- name: Prepare
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - "vars/{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') }}.yml"
+
+  tasks:
+    - import_tasks: kustomize-prepare.yml

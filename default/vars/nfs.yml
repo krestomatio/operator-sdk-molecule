@@ -1,0 +1,19 @@
+operator_shortname: "{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') |
+  default('nfs',true) }}"
+crds:
+  server:
+    name: servers.nfs.krestomat.io
+    sample_file: "{{ lookup('env', 'CR_FILE_SERVER') |
+      default('nfs_v1alpha1_server.yaml',true) }}"
+kustomize_config_dirs_build:
+  - "{{ config_dir }}/testing/nfs/operator"
+  - "{{ config_dir }}/testing/nfs/server"
+  - "{{ config_dir }}/testing"
+kustomize_config_dirs_edit_namespace: "{{ kustomize_config_dirs_build }}"
+verify_debug_resources:
+  - api_version: v1
+    kind: Pod
+  - api_version: apps/v1
+    kind: StatefulSet
+  - api_version: nfs.rook.io/v1alpha1
+    kind: NFSServer

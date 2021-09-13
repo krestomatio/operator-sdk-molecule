@@ -1,0 +1,18 @@
+operator_shortname: "{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') |
+  default('g12e',true) }}"
+crds:
+  g12e:
+    name: g12es.app.krestomat.io
+    sample_file: "{{ lookup('env', 'CR_FILE_G12E') |
+      default('app_v1alpha1_g12e.yaml',true) }}"
+  server:
+    name: servers.app.krestomat.io
+    sample_file: "{{ lookup('env', 'CR_FILE_SERVER') |
+      default('app_v1alpha1_server.yaml',true) }}"
+verify_debug_resources:
+  - api_version: v1
+    kind: Pod
+  - api_version: apps/v1
+    kind: Deployment
+  - api_version: v1
+    kind: Secret
