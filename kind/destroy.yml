@@ -5,7 +5,7 @@
   vars_files:
     - "../default/vars/{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') }}.yml"
   collections:
-    - community.kubernetes
+    - kubernetes.core
 
   tasks:
     - name: Destroy test kind cluster
