@@ -4,6 +4,7 @@ crds:
   keydb:
     name: keydbs.keydb.krestomat.io
     sample_file: "{{ lookup('env', 'CR_FILE_KEYDB') |
+      default(crd_sample_file,true) |
       default('keydb_v1alpha1_keydb.yaml',true) }}"
 verify_wait_timeout: 600
 verify_debug_resources:

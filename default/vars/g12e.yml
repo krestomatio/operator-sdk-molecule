@@ -4,6 +4,7 @@ crds:
   g12e:
     name: g12es.app.krestomat.io
     sample_file: "{{ lookup('env', 'CR_FILE_G12E') |
+      default(crd_sample_file,true) |
       default('app_v1alpha1_g12e.yaml',true) }}"
   server:
     name: servers.app.krestomat.io

@@ -4,6 +4,7 @@ crds:
   server:
     name: servers.nfs.krestomat.io
     sample_file: "{{ lookup('env', 'CR_FILE_SERVER') |
+      default(crd_sample_file,true) |
       default('nfs_v1alpha1_server.yaml',true) }}"
 kustomize_config_dirs_build:
   - "{{ config_dir }}/testing/nfs/operator"
