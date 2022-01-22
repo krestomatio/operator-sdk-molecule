@@ -1,0 +1,31 @@
+---
+- name: base test resource
+  vars:
+    crd_key: keydb
+    crd_api: keydb.krestomat.io/v1alpha1.Keydb
+  block:
+    - name: test standalone mode
+      block:
+        - name: test standalone mode
+          debug:
+            msg: testing standalone mode
+
+        - include_tasks: ../base_create_cr.yml
+
+        - include_tasks: ../base_delete_cr.yml
+
+    - name: test multimaster mode
+      vars:
+        crd_sample_file: keydb_v1alpha1_keydb_multimaster.yaml
+      block:
+        - name: test multimaster mode
+          debug:
+            msg: testing multimaster mode
+
+        - include_tasks: ../base_create_cr.yml
+
+        - include_tasks: ../base_delete_cr.yml
+  # - name: Add assertions here
+  #   assert:
+  #     that: false
+  #     fail_msg: FIXME Add real assertions for your operator
