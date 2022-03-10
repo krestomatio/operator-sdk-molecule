@@ -1,0 +1,32 @@
+---
+- name: base test resource
+  vars:
+    crd_key: postgres
+    crd_api: postgres.krestomat.io/v1alpha1.Postgres
+  block:
+    - name: test standalone mode
+      block:
+        - name: test standalone mode
+          debug:
+            msg: testing standalone mode
+
+        - include_tasks: ../base_create_cr.yml
+
+        - include_tasks: ../base_delete_cr.yml
+
+    - name: test readreplicas mode
+      vars:
+        crd_sample_file: postgres_v1alpha1_postgres_readreplicas.yaml
+      block:
+        - name: test readreplicas mode
+          debug:
+            msg: testing readreplicas mode
+
+        - include_tasks: ../base_create_cr.yml
+
+        - include_tasks: ../base_delete_cr.yml
+
+  # - name: Add assertions here
+  #   assert:
+  #     that: false
+  #     fail_msg: FIXME Add real assertions for your operator

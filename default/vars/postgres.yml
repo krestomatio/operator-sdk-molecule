@@ -1,0 +1,16 @@
+operator_shortname: "{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') |
+  default('postgres',true) }}"
+crds:
+  postgres:
+    name: postgres.postgres.krestomat.io
+    sample_file: "{{ lookup('env', 'CR_FILE_POSTGRES') |
+      default(crd_sample_file,true) |
+      default('postgres_v1alpha1_postgres.yaml',true) }}"
+verify_wait_timeout: 600
+verify_debug_resources:
+  - api_version: v1
+    kind: Pod
+  - api_version: apps/v1
+    kind: StatefulSet
+  - api_version: v1
+    kind: Secret
