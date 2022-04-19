@@ -1,0 +1,27 @@
+- name: postgres db
+  vars:
+    postgres_cr_state: present
+    postgres_cr_definition: "{{ lookup('url', 'https://raw.githubusercontent.com/krestomatio/postgres-operator/main/config/samples/postgres_v1alpha1_postgres.yaml', split_lines=False) | from_yaml }}"
+  block:
+    - name: "postgres db in state: {{ postgres_cr_state }}"
+      k8s:
+        state: "{{ postgres_cr_state }}"
+        namespace: "{{ namespace }}"
+        definition: "{{ postgres_cr_definition | from_yaml }}"
+        wait: "{{ false if postgres_cr_state | default('present') == 'absent' else true }}"
+        wait_timeout: 120
+        wait_condition:
+          type: Successful
+          status: "True"
+
+    - name: wait for postgres db removal
+      when: "postgres_cr_state == 'absent'"
+      retries: 12
+      until:
+        - postgres_cr_wait_task.resources is defined and not postgres_cr_wait_task.resources
+      k8s_info:
+        api_version: "{{ postgres_cr_definition.apiVersion }}"
+        kind: "{{ postgres_cr_definition.kind }}"
+        name: "{{ postgres_cr_definition.metadata.name }}"
+        namespace: "{{ namespace }}"
+      register: postgres_cr_wait_task

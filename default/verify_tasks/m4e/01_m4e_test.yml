@@ -4,9 +4,17 @@
     crd_key: m4e
     crd_api: m4e.krestomat.io/v1alpha1.M4e
   block:
+    - name: create postgres db
+      include_tasks: postgres_cr.yml
+
     - include_tasks: ../base_create_cr.yml
 
     - include_tasks: ../base_delete_cr.yml
+
+    - name: remove postgres db
+      include_tasks: postgres_cr.yml
+      vars:
+        postgres_cr_state: absent
 
   # - name: Add assertions here
   #   assert:

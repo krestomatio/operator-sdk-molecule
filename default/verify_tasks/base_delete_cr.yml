@@ -3,5 +3,6 @@
   k8s:
     state: absent
     namespace: '{{ namespace }}'
-    definition: "{{ lookup('template', '/'.join([samples_dir, crds[crd_key].sample_file])) | from_yaml }}"
+    definition: "{{ crd_definition |
+      default(lookup('template', '/'.join([samples_dir, crds[crd_key].sample_file])) | from_yaml) }}"
     wait: true

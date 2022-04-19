@@ -6,6 +6,10 @@ crds:
     sample_file: "{{ lookup('env', 'CR_FILE_M4E') |
       default(crd_sample_file,true) |
       default('m4e_v1alpha1_m4e.yaml',true) }}"
+kustomize_config_dirs_build:
+  - "{{ config_dir }}/testing/postgres"
+  - "{{ config_dir }}/testing"
+kustomize_config_dirs_edit_namespace: "{{ kustomize_config_dirs_build }}"
 verify_wait_timeout: 600
 verify_debug_resources:
   - api_version: v1
