@@ -13,4 +13,4 @@
 
     - import_tasks: ../default/kustomize-prepare.yml
       vars:
-        kustomize_prepate_set: false
+        kustomize_prepare_set: false

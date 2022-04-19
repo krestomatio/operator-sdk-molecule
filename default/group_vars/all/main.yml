@@ -16,8 +16,8 @@ verify_debug_resources:
 
 # kustomize
 kustomize: "{{ lookup('env', 'KUSTOMIZE_PATH') | default('kustomize', true) }}"
-kustomize_edit_set: "{{ 'set' if kustomize_prepate_set | default(true) | bool else 'unset' }}"
-kustomize_edit_add: "{{ 'add' if kustomize_prepate_set | default(true) | bool else 'remove' }}"
+kustomize_edit_set: "{{ 'set' if kustomize_prepare_set | default(true) | bool else 'unset' }}"
+kustomize_edit_add: "{{ 'add' if kustomize_prepare_set | default(true) | bool else 'remove' }}"
 kustomize_config_dirs:
   - "{{ config_dir }}/testing"
 
