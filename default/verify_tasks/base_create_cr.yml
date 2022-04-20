@@ -1,4 +1,5 @@
 - name: "Create the {{ crd_api }}"
+  register: base_create_cr_task
   k8s:
     state: present
     namespace: '{{ namespace }}'

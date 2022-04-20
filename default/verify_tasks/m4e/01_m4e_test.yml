@@ -9,6 +9,61 @@
 
     - include_tasks: ../base_create_cr.yml
 
+    - name: upgrade m4e image and wait for pending update
+      k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        name: "{{ base_create_cr_task.result.metadata.name }}"
+        kind: "{{ base_create_cr_task.result.kind }}"
+        api_version: "{{ base_create_cr_task.result.apiVersion }}"
+        definition:
+          spec:
+            moodle_image: quay.io/krestomatio/moodle_web:update
+        wait: true
+        wait_timeout: 180
+        wait_condition:
+          type: UpToDate
+          status: "False"
+
+    - name: wait m4e to not be ready
+      k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        name: "{{ base_create_cr_task.result.metadata.name }}"
+        kind: "{{ base_create_cr_task.result.kind }}"
+        api_version: "{{ base_create_cr_task.result.apiVersion }}"
+        wait: true
+        wait_timeout: 180
+        wait_condition:
+          type: Ready
+          status: "False"
+
+    - name: wait m4e to be up to date
+      k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        name: "{{ base_create_cr_task.result.metadata.name }}"
+        kind: "{{ base_create_cr_task.result.kind }}"
+        api_version: "{{ base_create_cr_task.result.apiVersion }}"
+        wait: true
+        wait_timeout: 180
+        wait_condition:
+          type: UpToDate
+          status: "True"
+
+    - name: wait m4e to be ready
+      k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        name: "{{ base_create_cr_task.result.metadata.name }}"
+        kind: "{{ base_create_cr_task.result.kind }}"
+        api_version: "{{ base_create_cr_task.result.apiVersion }}"
+        wait: true
+        wait_timeout: 180
+        wait_condition:
+          type: Ready
+          status: "True"
+
     - include_tasks: ../base_delete_cr.yml
 
     - name: remove postgres db
