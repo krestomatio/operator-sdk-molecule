@@ -14,6 +14,15 @@
   k8s:
     definition: '{{ item }}'
     state: '{{ state }}'
+    wait: no
+  loop: "{{ resources.results | map(attribute='stdout') | join('\n---\n') | from_yaml_all | reverse |
+    list if state == 'absent' else resources.results | map(attribute='stdout') | join('\n---\n') |
+    from_yaml_all | list }}"
+
+- name: Wait for resources to get to {{ state }}
+  k8s:
+    definition: '{{ item }}'
+    state: '{{ state }}'
     wait: yes
   loop: "{{ resources.results | map(attribute='stdout') | join('\n---\n') | from_yaml_all | reverse |
     list if state == 'absent' else resources.results | map(attribute='stdout') | join('\n---\n') |
