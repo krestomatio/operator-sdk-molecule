@@ -2,8 +2,8 @@ nameprefix: "{{ lookup('env', 'TEST_OPERATOR_NAMEPREFIX') |
   default(operator_shortname + '-', true) }}"
 namespace: "{{ lookup('env', 'TEST_OPERATOR_NAMESPACE') |
   default(operator_shortname + '-test', true) }}"
-omit_crds_deletion: "{{ lookup('env', 'TEST_OPERATOR_OMIT_CRDS_DELETION') |
-  default(false, true) | bool }}"
+omit_kind_deletion_list: "{{ (lookup('env', 'TEST_OPERATOR_OMIT_KIND_DELETION_LIST') |
+  default('', true)).split(',') | list }}"
 verify_debug_resources:
   - api_version: v1
     kind: Pod

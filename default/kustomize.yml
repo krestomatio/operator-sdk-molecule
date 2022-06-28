@@ -10,7 +10,7 @@
   changed_when: false
 
 - name: Set resources to {{ state }}
-  when: "not (omit_crds_deletion and state == 'absent' and item.kind == 'CustomResourceDefinition')"
+  when: "state != 'absent' or item.kind not in omit_kind_deletion_list"
   k8s:
     definition: '{{ item }}'
     state: '{{ state }}'
@@ -20,6 +20,7 @@
     from_yaml_all | list }}"
 
 - name: Wait for resources to get to {{ state }}
+  when: "state != 'absent' or item.kind not in omit_kind_deletion_list"
   k8s:
     definition: '{{ item }}'
     state: '{{ state }}'
