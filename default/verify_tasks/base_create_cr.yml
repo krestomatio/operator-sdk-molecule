@@ -8,5 +8,5 @@
     wait: yes
     wait_timeout: "{{ verify_create_cr_wait_timeout | default(verify_wait_timeout) | default(300) }}"
     wait_condition:
-      type: Successful
+      type: "{{ verify_create_cr_wait_condition_type | default('Ready') }}"
       status: "True"
