@@ -66,6 +66,7 @@
 
     - include_tasks: ../base_delete_cr.yml
 
+  always:
     - name: remove postgres db
       include_tasks: postgres_cr.yml
       vars:
