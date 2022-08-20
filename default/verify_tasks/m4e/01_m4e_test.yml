@@ -9,7 +9,7 @@
 
     - include_tasks: ../base_create_cr.yml
 
-    - name: upgrade m4e image and wait for pending update
+    - name: update m4e image and wait for pending update
       k8s:
         state: present
         namespace: "{{ namespace }}"

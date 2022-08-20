@@ -42,6 +42,7 @@
           loop: '{{ debug_logs.results }}'
 
         - name: Re-emit failure
+          when: ansible_failed_result is defined
           vars:
             failed_task:
               result: '{{ ansible_failed_result }}'
