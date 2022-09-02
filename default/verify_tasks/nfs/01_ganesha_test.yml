@@ -1,8 +1,8 @@
 ---
 - name: base test resource
   vars:
-    crd_key: server
-    crd_api: nfs.krestomat.io/v1alpha1.Server
+    crd_key: ganesha
+    crd_api: nfs.krestomat.io/v1alpha1.Ganesha
   block:
     - include_tasks: ../base_create_cr.yml
 

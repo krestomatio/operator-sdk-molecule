@@ -1,11 +1,11 @@
 operator_shortname: "{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') |
   default('nfs',true) }}"
 crds:
-  server:
-    name: servers.nfs.krestomat.io
-    sample_file: "{{ lookup('env', 'CR_FILE_SERVER') |
+  ganesha:
+    name: ganeshas.nfs.krestomat.io
+    sample_file: "{{ lookup('env', 'CR_FILE_GANESHA') |
       default(crd_sample_file,true) |
-      default('nfs_v1alpha1_server.yaml',true) }}"
+      default('nfs_v1alpha1_ganesha.yaml',true) }}"
 kustomize_config_dirs_build:
   - "{{ config_dir }}/testing"
 kustomize_config_dirs_edit_namespace: "{{ kustomize_config_dirs_build }}"
