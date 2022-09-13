@@ -1,15 +1,15 @@
 ---
 - name: base test resource
   vars:
-    crd_key: m4e
-    crd_api: m4e.krestomat.io/v1alpha1.M4e
+    crd_key: moodle
+    crd_api: m4e.krestomat.io/v1alpha1.Moodle
   block:
     - name: create postgres db
       include_tasks: postgres_cr.yml
 
     - include_tasks: ../base_create_cr.yml
 
-    - name: update m4e image and wait for pending update
+    - name: update moodle image and wait for pending update
       k8s:
         state: present
         namespace: "{{ namespace }}"
@@ -25,7 +25,7 @@
           type: UpToDate
           status: "False"
 
-    - name: wait m4e to not be ready
+    - name: wait moodle to not be ready
       k8s:
         state: present
         namespace: "{{ namespace }}"
@@ -38,7 +38,7 @@
           type: Ready
           status: "False"
 
-    - name: wait m4e to be up to date
+    - name: wait moodle to be up to date
       k8s:
         state: present
         namespace: "{{ namespace }}"
@@ -51,7 +51,7 @@
           type: UpToDate
           status: "True"
 
-    - name: wait m4e to be ready
+    - name: wait moodle to be ready
       k8s:
         state: present
         namespace: "{{ namespace }}"

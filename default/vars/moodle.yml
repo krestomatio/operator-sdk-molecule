@@ -1,12 +1,12 @@
 operator_shortname: "{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') |
-  default('m4e',true) }}"
+  default('moodle',true) }}"
 crds:
-  m4e:
-    name: m4es.m4e.krestomat.io
-    sample_file: "{{ lookup('env', 'CR_FILE_M4E') |
+  moodle:
+    name: moodles.m4e.krestomat.io
+    sample_file: "{{ lookup('env', 'CR_FILE_MOODLE') |
       default(crd_sample_file,true) |
-      default('m4e_v1alpha1_m4e.yaml.j2',true) }}"
-m4e_sample_extra_spec: |-
+      default('m4e_v1alpha1_moodle.yaml.j2',true) }}"
+moodle_sample_extra_spec: |-
   moodle_postgres_meta_name: postgres-sample
 kustomize_config_dirs_build:
   - "{{ config_dir }}/testing/postgres"
