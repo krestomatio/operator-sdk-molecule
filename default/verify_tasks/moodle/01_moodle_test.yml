@@ -59,7 +59,7 @@
         kind: "{{ base_create_cr_task.result.kind }}"
         api_version: "{{ base_create_cr_task.result.apiVersion }}"
         wait: true
-        wait_timeout: 180
+        wait_timeout: 300
         wait_condition:
           type: Ready
           status: "True"
