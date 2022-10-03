@@ -18,7 +18,7 @@
         api_version: "{{ base_create_cr_task.result.apiVersion }}"
         definition:
           spec:
-            moodle_image: quay.io/krestomatio/moodle_bundle
+            moodle_image: "{{ moodle_upgrade_image }}"
         wait: true
         wait_timeout: 180
         wait_condition:
