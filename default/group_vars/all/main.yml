@@ -35,5 +35,5 @@ operator_pull_policy: "{{ lookup('env', 'OPERATOR_PULL_POLICY') if
 project_dir: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}"
 operator_image_args:
   COLLECTION_FILE: "{{ lookup('env', 'COLLECTION_FILE') | default('krestomatio-k8s-master.tar.gz', true) }}"
-kind_image: "kindest/node:{{ lookup('env', 'KIND_IMAGE_VERSION') | default('v1.23.6', true) }}"
+kind_image: "kindest/node:{{ lookup('env', 'KIND_IMAGE_VERSION') | default('v1.26.6', true) }}"
 kubeconfig: "{{ lookup('env', 'KUBECONFIG') }}"
