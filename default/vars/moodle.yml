@@ -13,7 +13,7 @@ moodle_sample_extra_spec: |-
   {% endif %}
 moodle_image: "{{ lookup('env', 'MOODLE_IMAGE') }}"
 moodle_upgrade_image: "{{ lookup('env', 'MOODLE_UPGRADE_IMAGE') |
-  default('quay.io/krestomatio/moodle:4.0-bundle',true) }}"
+  default('quay.io/krestomatio/moodle:4.1-bundle',true) }}"
 kustomize_config_dirs_build:
   - "{{ config_dir }}/testing/postgres"
   - "{{ config_dir }}/testing"
