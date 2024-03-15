@@ -12,6 +12,8 @@
 
         - include_tasks: ../base_create_cr.yml
 
+        - include_tasks: ../base_suspend_cr.yml
+
         - include_tasks: ../base_delete_cr.yml
 
     - name: test multimaster mode
@@ -23,6 +25,8 @@
             msg: testing multimaster mode
 
         - include_tasks: ../base_create_cr.yml
+
+        - include_tasks: ../base_suspend_cr.yml
 
         - include_tasks: ../base_delete_cr.yml
   # - name: Add assertions here
