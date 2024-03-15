@@ -13,21 +13,21 @@
   tasks:
     - block:
         - name: Include all test files from tasks/
-          include_tasks: '{{ item }}'
+          include_tasks: "{{ item }}"
           loop: "{{ query('fileglob', 'verify_tasks/' + operator_shortname + '/*_test.yml') | sort }}"
       rescue:
         - name: Retrieve relevant resources
           k8s_info:
-            api_version: '{{ item.api_version }}'
-            kind: '{{ item.kind }}'
-            namespace: '{{ namespace }}'
+            api_version: "{{ item.api_version }}"
+            kind: "{{ item.kind }}"
+            namespace: "{{ namespace }}"
           loop: "{{ verify_debug_resources }}"
           register: debug_resources
 
         - name: Retrieve Pod logs
           k8s_log:
-            name: '{{ item.metadata.name }}'
-            namespace: '{{ namespace }}'
+            name: "{{ item.metadata.name }}"
+            namespace: "{{ namespace }}"
             container: manager
           loop: "{{ q('k8s', api_version='v1', kind='Pod', namespace=namespace, label_selector=ctrl_label) }}"
           register: debug_logs
@@ -39,12 +39,18 @@
         - name: Output gathered logs
           debug:
             var: item.log_lines
-          loop: '{{ debug_logs.results }}'
+          loop: "{{ debug_logs.results }}"
 
-        - name: Re-emit failure
+        - name: show failed task
+          when: ansible_failed_task is defined
+          debug:
+            msg: "{{ ansible_failed_task }}"
+
+        - name: show failed result
           when: ansible_failed_result is defined
-          vars:
-            failed_task:
-              result: '{{ ansible_failed_result }}'
+          debug:
+            msg: "{{ ansible_failed_result }}"
+
+        - name: fail verify step
           fail:
-            msg: '{{ failed_task }}'
+            msg: "Verify step failed"
