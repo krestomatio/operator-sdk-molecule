@@ -1,0 +1,8 @@
+ansible-core==2.15.*
+molecule==5.1.*
+yamllint
+ansible-lint
+flake8
+cryptography
+git-semver
+openshift

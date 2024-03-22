@@ -1,6 +1,7 @@
 ---
 - name: Prepare
   hosts: localhost
+  connection: local
   gather_facts: false
   vars_files:
     - "vars/{{ lookup('env', 'TEST_OPERATOR_SHORTNAME') }}.yml"

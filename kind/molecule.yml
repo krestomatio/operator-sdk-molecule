@@ -3,14 +3,6 @@ dependency:
   name: galaxy
 driver:
   name: delegated
-lint: |
-  set -e
-  yamllint -d "{extends: relaxed, rules: {line-length: {max: 120}}}" .
-  if [ -d roles ]; then
-    yamllint roles/*
-    ansible-lint roles/*
-    flake8 roles/*
-  fi
 platforms:
   - name: cluster
     groups:
