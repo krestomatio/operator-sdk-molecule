@@ -21,6 +21,7 @@
         definition:
           spec:
             moodle_image: "{{ moodle_upgrade_image }}"
+            moodle_image_pull_policy: "Always"
         wait: true
         wait_timeout: 180
         wait_condition:
