@@ -7,10 +7,12 @@ crds:
       default(crd_sample_file,true) |
       default('m4e_v1alpha1_moodle.yaml.j2',true) }}"
 moodle_sample_extra_spec: |-
-  moodle_postgres_meta_name: postgres-sample
+  moodlePostgresMetaName: postgres-sample
   {% if moodle_image != '' %}
-  moodle_image: {{ moodle_image }}
+  moodleImage: {{ moodle_image }}
   {% endif %}
+  moodleNetpolOmit: {{ lookup('env', 'MOODLE_NETPOL_OMIT') | default('false', true) }}
+  moodleNetpolIngressIpblock: 192.168.0.0/24
 moodle_image: "{{ lookup('env', 'MOODLE_IMAGE') }}"
 moodle_upgrade_image: "{{ lookup('env', 'MOODLE_UPGRADE_IMAGE') |
   default('quay.io/krestomatio/moodle:4.1-bundle',true) }}"
