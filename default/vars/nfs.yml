@@ -5,7 +5,10 @@ crds:
     name: ganeshas.nfs.krestomat.io
     sample_file: "{{ lookup('env', 'CR_FILE_GANESHA') |
       default(crd_sample_file,true) |
-      default('nfs_v1alpha1_ganesha.yaml',true) }}"
+      default('nfs_v1alpha1_ganesha.yaml.j2',true) }}"
+nfs_sample_extra_spec: |-
+  ganeshaNetpolOmit: {{ lookup('env', 'GANESHA_NETPOL_OMIT') | default('false', true) }}
+  ganeshaNetpolIngressIpblock: 192.168.0.0/24
 kustomize_config_dirs_build:
   - "{{ config_dir }}/testing"
 kustomize_config_dirs_edit_namespace: "{{ kustomize_config_dirs_build }}"
