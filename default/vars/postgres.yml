@@ -5,7 +5,14 @@ crds:
     name: postgres.postgres.krestomat.io
     sample_file: "{{ lookup('env', 'CR_FILE_POSTGRES') |
       default(crd_sample_file,true) |
-      default('postgres_v1alpha1_postgres.yaml',true) }}"
+      default('postgres_v1alpha1_postgres.yaml.j2',true) }}"
+postgres_sample_extra_spec: |-
+  postgresNetpolOmit: {{ lookup('env', 'POSTGRES_NETPOL_OMIT') | default('false', true) }}
+  postgresNetpolIngressIpblock: 192.168.0.0/24
+  pgbouncerNetpolOmit: {{ lookup('env', 'PGBOUNCER_NETPOL_OMIT') | default('false', true) }}
+  pgbouncerNetpolIngressIpblock: 192.168.0.0/24
+postgres_readreplicas_crd_sample_file: postgres_v1alpha1_postgres_readreplicas.yaml.j2
+postgres_readreplicas_sample_extra_spec: "{{ postgres_sample_extra_spec }}"
 verify_wait_timeout: 600
 verify_debug_resources:
   - api_version: v1

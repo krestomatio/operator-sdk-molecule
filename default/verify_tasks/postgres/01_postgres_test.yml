@@ -18,7 +18,7 @@
 
     - name: test readreplicas mode
       vars:
-        crd_sample_file: postgres_v1alpha1_postgres_readreplicas.yaml
+        crd_sample_file: "{{ postgres_readreplicas_crd_sample_file }}"
       block:
         - name: test readreplicas mode
           debug:
