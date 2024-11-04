@@ -5,7 +5,12 @@ crds:
     name: keydbs.keydb.krestomat.io
     sample_file: "{{ lookup('env', 'CR_FILE_KEYDB') |
       default(crd_sample_file,true) |
-      default('keydb_v1alpha1_keydb.yaml',true) }}"
+      default('keydb_v1alpha1_keydb.yaml.j2',true) }}"
+keydb_sample_extra_spec: |-
+  keydbNetpolOmit: {{ lookup('env', 'KEYDB_NETPOL_OMIT') | default('false', true) }}
+  keydbNetpolIngressIpblock: 192.168.0.0/24
+keydb_multimaster_crd_sample_file: keydb_v1alpha1_keydb_multimaster.yaml.j2
+keydb_multimaster_sample_extra_spec: "{{ keydb_sample_extra_spec }}"
 verify_wait_timeout: 600
 verify_debug_resources:
   - api_version: v1

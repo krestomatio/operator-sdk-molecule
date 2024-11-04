@@ -18,7 +18,7 @@
 
     - name: test multimaster mode
       vars:
-        crd_sample_file: keydb_v1alpha1_keydb_multimaster.yaml
+        crd_sample_file: "{{ keydb_multimaster_crd_sample_file }}"
       block:
         - name: test multimaster mode
           debug:
