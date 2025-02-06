@@ -1,6 +1,6 @@
 nameprefix: "{{ lookup('env', 'TEST_OPERATOR_NAMEPREFIX') |
   default(operator_shortname + '-', true) }}"
-namespace: "{{ lookup('env', 'TEST_OPERATOR_NAMESPACE') |
+k8s_namespace: "{{ lookup('env', 'TEST_OPERATOR_NAMESPACE') |
   default(operator_shortname + '-test', true) }}"
 omit_kind_deletion_list: "{{ (lookup('env', 'TEST_OPERATOR_OMIT_KIND_DELETION_LIST') |
   default('', true)).split(',') | list }}"

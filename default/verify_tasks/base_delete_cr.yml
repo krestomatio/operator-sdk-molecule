@@ -3,7 +3,7 @@
   register: base_delete_cr_task
   k8s:
     state: absent
-    namespace: '{{ namespace }}'
+    namespace: '{{ k8s_namespace }}'
     definition: "{{ crd_definition |
       default(lookup('template', '/'.join([samples_dir, crds[crd_key].sample_file])) | from_yaml) }}"
     wait: true

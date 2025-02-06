@@ -20,7 +20,7 @@
 
 - name: "{{ kustomize_edit_set }} testing namespace"
   loop: "{{ kustomize_config_dirs_edit_namespace | default(kustomize_config_dirs) }}"
-  command: '{{ kustomize }} edit set namespace {{ namespace if kustomize_edit_set == "set" else operator_shortname + "-test" }}'
+  command: '{{ kustomize }} edit set namespace {{ k8s_namespace if kustomize_edit_set == "set" else operator_shortname + "-test" }}'
   args:
     chdir: '{{ item }}'
 

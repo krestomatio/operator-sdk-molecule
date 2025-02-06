@@ -1,7 +1,7 @@
 - name: suspend
   k8s:
     state: present
-    namespace: "{{ namespace }}"
+    namespace: "{{ k8s_namespace }}"
     name: "{{ base_create_cr_task.result.metadata.name }}"
     kind: "{{ base_create_cr_task.result.kind }}"
     api_version: "{{ base_create_cr_task.result.apiVersion }}"
@@ -17,7 +17,7 @@
 - name: resume
   k8s:
     state: present
-    namespace: "{{ namespace }}"
+    namespace: "{{ k8s_namespace }}"
     name: "{{ base_create_cr_task.result.metadata.name }}"
     kind: "{{ base_create_cr_task.result.kind }}"
     api_version: "{{ base_create_cr_task.result.apiVersion }}"
