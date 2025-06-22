@@ -15,7 +15,7 @@ moodle_sample_extra_spec: |-
   moodleNetpolIngressIpblock: 192.168.0.0/24
 moodle_image: "{{ lookup('env', 'MOODLE_IMAGE') }}"
 moodle_upgrade_image: "{{ lookup('env', 'MOODLE_UPGRADE_IMAGE') |
-  default('quay.io/krestomatio/moodle:4.1-bundle',true) }}"
+  default('quay.io/krestomatio/moodle:4.5-bundle',true) }}"
 kustomize_config_dirs_build:
   - "{{ config_dir }}/testing/postgres"
   - "{{ config_dir }}/testing"
